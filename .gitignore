@@ -1,4 +1,7 @@
-*.log
 *.aux
+*.log
 *.out
+*.toc
+*.nav
+*.snm
 .ipynb_checkpoints
