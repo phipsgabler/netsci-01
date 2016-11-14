@@ -4,6 +4,10 @@ using LightGraphs, GraphPlot
 
 export readnetwork, samplenetwork
 
+const line_regex = r"^(\d+)\s(\d+)"
+
+@inline maybe{T}(f::Function, m::T) = f(m)
+@inline maybe(::Function, ::Void) = nothing
 
 @inline function splitwhile(s::AbstractString, predicate::Function)
     i = 1
@@ -20,32 +24,30 @@ end
 
 "Read a space separated file into an (undirected) Graph in an efficient way."
 function readnetwork(filename::String, limit::Number = Inf; fromzero::Bool = false)
-    #edges = parse(readstring(pipeline(`grep -v '^#' $filename`, `wc -l`)))
-    
     graph = Graph()
     vertices = 0
     correction = Int(fromzero)
-    
+
     # using grep to exclude comment lines
-    open(`grep -v '^#' $filename`) do file
+    open(filename) do file
         for (l, line) in enumerate(eachline(file))
             if l > limit
                 break
             end
 
-            #a, b = map(e -> parse(e) + correction, matchall(r"\d+", line))
-            rawa, rest = splitwhile(line, isdigit)
-            _, rawb = splitwhile(rest, isspace)
-            a = parse(Int, rawa) + correction
-            b = parse(Int, rawb) + correction
+            if (m = match(line_regex, line)) !== nothing
+                raw_v1, raw_v2 = m.captures
+                v1 = parse(Int, raw_v1) + correction
+                v2 = parse(Int, raw_v2) + correction
             
-            if a > vertices || b > vertices
-                @assert add_vertices!(graph, max(a, b) - vertices)
-                vertices = max(a, b)
+                if v1 > vertices || v2 > vertices
+                    @assert add_vertices!(graph, max(v1, v2) - vertices)
+                    vertices = max(v1, v2)
+                end
+                
+                # we explicitely ignore inverse directions, if there are any
+                @assert has_edge(graph, v1, v2) || add_edge!(graph, v1, v2)
             end
-            
-            # we explicitely ignore inverse directions, if there are any
-            @assert has_edge(graph, a, b) || add_edge!(graph, a, b)
         end
     end
 
