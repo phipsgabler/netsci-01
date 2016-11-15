@@ -7,6 +7,9 @@
 \usepackage{csquotes}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{booktabs}
 %\usepackage{tikz}
 %\usepackage{tikz-uml}
 
@@ -24,7 +27,14 @@
 \providecolor{textred}{RGB}{255, 51, 66}
 
 \usetheme[compress]{Singapore}
+\useinnertheme{circles}
 \setbeamercolor{structure}{fg=textblue}
+%\setbeamercolor{block body alerted}{bg=normal text.bg!90!black}
+\setbeamercolor{block body}{bg=normal text.bg!90!black}
+%\setbeamercolor{block body example}{bg=normal text.bg!90!black}
+%\setbeamercolor{block title alerted}{use={normal text,alerted text},fg=alerted text.fg!75!normal text.fg,bg=normal text.bg!75!black}
+\setbeamercolor{block title}{fg=black, bg=textblue!90}
+%\setbeamercolor{block title example}{use={normal text,example text},fg=example text.fg!75!normal text.fg,bg=normal text.bg!75!black}
 
 % smaller footnotes; see: http://tex.stackexchange.com/a/192652/46356
 \setbeamertemplate{footnote}{%
@@ -41,16 +51,68 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
+\beamertemplatenavigationsymbolsempty
 
 \section{Dataset}
 \begin{frame}
-lsdkfjlskf
+  \begin{columns}
+    \begin{column}{0.7\textwidth}
+      \small
+      \begin{tabular}{lrr}
+        \toprule
+        & Facebook\footnotemark & TX roads\footnotemark \\
+        \midrule
+        Vertices & 63731 & 1393383 \\
+        Edges (both undir.) & 817035 & 1921660 \\
+        Triangles & 10501626 & 248607 \\
+        Triangles/node & 164.780 & 0.178 \\
+        Mean degree & 25.640 & 2.758 \\
+        Density & 0.0004023 & 0.0000002 \\
+        Conn. components & 144 & 13890 \\
+        Mean component size & 442.576 & 100.315 \\
+        Global clustering coeff. & 0.1477 & 0.0602 \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.3\textwidth}
+      \includegraphics[width=\textwidth]{fig/texas-image}
+    \end{column}
+  \end{columns}
+  \footnotetext[1]{\protect\url{http://konect.uni-koblenz.de/networks/facebook-wosn-links}}
+  \footnotetext[2]{\protect\url{http://konect.uni-koblenz.de/networks/roadNet-TX}}
+
+  \begin{block}{Question}
+    A road network is topologically fundamentally different from a social one.  How do different
+    sampling strategies react to these differences?
+  \end{block}
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental Setup}
-\begin{frame}  %[containsverbatim]
+\begin{frame}
+  Comparison of random walk and \enquote{Forest Fire} (see
+  here\footnote{\protect\href{https://cs.stanford.edu/people/jure/pubs/sampling-kdd06.pdf}{Leskovec,
+      J; Faloutsos, C. \enquote{Sampling from Large Graphs.} In: Proceedings of the 12th ACM SIGKDD
+      International Conference on Knowledge Discovery and Data Mining, 631--636. ACM, 2006.}}), by
+  analysing some graph measures on samples.  \vspace{-0.5cm}
+  \begin{columns}
+    \begin{column}[t]{0.5\textwidth}
+      \begin{block}{Texas}
+        \centering
+        \includegraphics[scale=0.3]{fig/texas_rw}\par
+        \includegraphics[scale=0.3]{fig/texas_ff}
+      \end{block}
+    \end{column}
+    \begin{column}[t]{0.5\textwidth}
+      \begin{block}{Facebook}
+        \centering
+        \includegraphics[scale=0.3]{fig/facebook_rw}\par
+        \includegraphics[scale=0.3]{fig/facebook_ff}
+      \end{block}
+    \end{column}
+  \end{columns}
+  
 \end{frame}
 
 
