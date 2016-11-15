@@ -7,19 +7,6 @@ export readnetwork, samplenetwork
 
 const line_regex = r"^(\d+)\s(\d+)"
 
-# @inline function splitwhile(s::AbstractString, predicate::Function)
-#     i = 1
-#     for c in s
-#         if !predicate(c)
-#             break
-#         end
-        
-#         i += 1
-#     end
-    
-#     return s[1:i-1], s[i:end]
-# end
-
 "Read a space separated file into an (undirected) Graph in an efficient way."
 function readnetwork(filename::String, limit::Number = Inf; fromzero::Bool = false)
     graph = Graph()
@@ -64,11 +51,13 @@ end
     return next
 end
 
+"Randomly sample n nodes from a given network"
 function samplenetwork(graph::Graph, n::Integer, method::Symbol = :rw; options...)
     sampling_method = @eval $(Symbol("samplenetwork_", method))
     sampling_method(graph, n; options...)
 end
 
+"Sample using a random walk"
 samplenetwork_rw(graph::Graph, n::Integer; options...) =
     samplenetwork_rj(graph, n; c = 0.0, options...)
 
@@ -122,7 +111,8 @@ function samplenetwork_rj(graph::Graph, n::Integer;
     return sample
 end
 
-"Forest fire: samples from a network graph using bread-first edge following with decay"
+"Forest fire: samples from a network graph using a randomized bread-first search,
+with occasional restarts if necessary"
 function samplenetwork_ff(graph::Graph, n::Integer;
                           p::Float64 = 0.15, limit_factor::Integer = 100)
     
