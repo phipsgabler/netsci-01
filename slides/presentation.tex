@@ -91,7 +91,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experimental Setup}
 \begin{frame}
-  Comparison of random walk and \enquote{Forest Fire} (see
+  Comparison of \textit{random walk} and \textit{forest fire} (see
   here\footnote{\protect\href{https://cs.stanford.edu/people/jure/pubs/sampling-kdd06.pdf}{Leskovec,
       J; Faloutsos, C. \enquote{Sampling from Large Graphs.} In: Proceedings of the 12th ACM SIGKDD
       International Conference on Knowledge Discovery and Data Mining, 631--636. ACM, 2006.}}), by
@@ -100,19 +100,18 @@
     \begin{column}[t]{0.5\textwidth}
       \begin{block}{Texas}
         \centering
-        \includegraphics[scale=0.3]{fig/texas_rw}\par
+        \includegraphics[scale=0.3]{fig/texas_rw}\\
         \includegraphics[scale=0.3]{fig/texas_ff}
       \end{block}
     \end{column}
     \begin{column}[t]{0.5\textwidth}
       \begin{block}{Facebook}
         \centering
-        \includegraphics[scale=0.3]{fig/facebook_rw}\par
+        \includegraphics[scale=0.3]{fig/facebook_rw}\\
         \includegraphics[scale=0.3]{fig/facebook_ff}
       \end{block}
     \end{column}
   \end{columns}
-  
 \end{frame}
 
 
@@ -120,6 +119,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Results}
 \begin{frame}
+  Some meaningful measures by sampling 100 times from both data sets, using 10~\% of the
+  network\footnote{Code, data, and statistics:
+    \protect\url{https://github.com/phipsgabler/netsci-01}}.  \vspace{1ex}
+  \begin{columns}
+    \begin{column}[t]{0.4\textwidth}
+      \includegraphics[width=\textwidth]{fig/sampled-ok}\\
+      Magnitude mostly preserved
+    \end{column}
+    \begin{column}[t]{0.6\textwidth}
+      \includegraphics[width=\textwidth]{fig/sampled-off}\\
+      Magnitudes far off, but order still mostly preserved
+    \end{column}
+  \end{columns}
 \end{frame}
 
 
